@@ -1,0 +1,17 @@
+{{ block title }}
+    Make your guess
+{{ endblock }}
+
+{{ block content }}
+    <div class="card">
+        <div class="card-body">
+            <p>You have an endowment of {{C.ENDOWMENT}}.</p>
+            <p>The computer will generate a number from {{C.MIN_NUMBER}} to {{C.MAX_NUMBER}}.</p>
+            <p>You have to guess this number.</p>
+            <p>The closer is your guess the more you will earn.</p>
+        </div>
+    </div>
+
+    {{ formfields }}
+    {{ next_button }}
+{{ endblock }}

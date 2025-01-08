@@ -1,0 +1,18 @@
+{{ block title }}
+    Results
+{{ endblock }}
+
+{{ block content }}
+    <div class="card">
+        <div class="card-body">
+            <p>The number that computer generated was: {{ player.computer_number }}</p>
+            <p>Your guess was: {{ player.guess }}</p>
+            <p>The difference is: {{ player.difference }}</p>
+            <p>Your final earning is: {{C.ENDOWMENT}} - {{ player.difference }} = {{ player.final_payoff }} points</p>
+        </div>
+    </div>
+
+    {{ next_button }}
+{{ endblock }}
+
+
