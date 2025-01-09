@@ -31,15 +31,14 @@ class Player(BasePlayer):
         max=C.MAX_NUMBER,
         label="Please, insert any number from {} to {}".format(C.MIN_NUMBER, C.MAX_NUMBER),
     )
-    difference = models.IntegerField()
-    final_payoff = models.CurrencyField()
 
 
 class Instructions(Page):
     @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        # Generate random number when leaving instructions
-        player.computer_number = random.randint(C.MIN_NUMBER, C.MAX_NUMBER)
+    def before_next_page(player, timeout_happened):
+        player.computer_number = random.randint(
+            C.MIN_NUMBER, C.MAX_NUMBER
+        )
 
 
 class MyPage(Page):
@@ -47,14 +46,28 @@ class MyPage(Page):
     form_fields = ['guess']
 
     @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        # Calculate difference and final payoff
-        player.difference = abs(player.computer_number - player.guess)
-        player.final_payoff = C.ENDOWMENT - player.difference
+    def before_next_page(player, timeout_happened):
+        difference = abs(player.computer_number - player.guess)
+        player.payoff = C.ENDOWMENT - difference
+
+    @staticmethod
+    def vars_for_template(player):
+        guess = player.field_maybe_none('guess')
+        if guess is None:
+            return {}
+        return {
+            'difference': abs(player.computer_number - guess)
+        }
 
 
 class Results(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player):
+        guess = player.field_maybe_none('guess')
+        difference = abs(player.computer_number - guess) if guess is not None else 0
+        return {
+            'difference': difference
+        }
 
 
 page_sequence = [Instructions, MyPage, Results]
