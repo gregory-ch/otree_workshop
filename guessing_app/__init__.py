@@ -32,7 +32,7 @@ class Player(BasePlayer):
         label="Please, insert any number from {} to {}".format(C.MIN_NUMBER, C.MAX_NUMBER),
     )
 
-
+# Pages
 class Instructions(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
@@ -50,14 +50,14 @@ class MyPage(Page):
         difference = abs(player.computer_number - player.guess)
         player.payoff = C.ENDOWMENT - difference
 
-    @staticmethod
-    def vars_for_template(player):
-        guess = player.field_maybe_none('guess')
-        if guess is None:
-            return {}
-        return {
-            'difference': abs(player.computer_number - guess)
-        }
+    # @staticmethod
+    # def vars_for_template(player):
+    #     guess = player.field_maybe_none('guess')
+    #     if guess is None:
+    #         return {}
+    #     return {
+    #         'difference': abs(player.computer_number - guess)
+    #     }
 
 
 class Results(Page):
